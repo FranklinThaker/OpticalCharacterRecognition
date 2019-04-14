@@ -1,5 +1,4 @@
 
-Example
 Library Requirements:
 
 pytesseract
