@@ -22,5 +22,5 @@ numpy
 os
 
 How to Use the project ?
->> Open terminal in current project directory..
->> python3 main.py
+--> Open terminal in current project directory..
+--> python3 main.py
