@@ -1,3 +1,8 @@
+# for python2
+# from Tkinter import *
+# import ttk
+# import tkFileDialog as askopenfilename
+
 #for python3
 from tkinter import *
 from tkinter import ttk
@@ -8,6 +13,9 @@ import numpy as np
 import cv2
 import os
 import sys
+
+
+from userimageski import UserData
 
 root = Tk(  )
 
@@ -34,13 +42,40 @@ def readFimage():
         text = result        
         ResultTextBox.delete('1.0',END)
         ResultTextBox.insert(END,text)
+
+
+        ##### the following code includes all the steps to get from a raw image to a prediction.
+        ##### the working code is the uncommented one. 
+        ##### the two pickle models which are passed as argument to the select_text_among_candidates
+        ##### and classify_text methods are obviously the result of a previously implemented pipeline.
+        ##### just for the purpose of clearness below the code is provided. 
+        ##### I want to emphasize that the commented code is the one necessary to get the models trained.
+        
+        # creates instance of class and loads image    
+        user = UserData(path)
+        # plots preprocessed imae 
+        user.plot_preprocessed_image()
+        # detects objects in preprocessed image
+        candidates = user.get_text_candidates()
+        # plots objects detected
+        user.plot_to_check(candidates, 'Total Objects Detected')
+        # selects objects containing text
+        # maybe_text = user.select_text_among_candidates('linearsvc-hog-fulltrain2-90.pickle')
+        # plots objects after text detection
+        # user.plot_to_check(maybe_text, 'Objects Containing Text Detected')
+        # classifies single characters
+        # classified = user.classify_text('linearsvc-hog-fulltrain36-90.pickle')
+        # plots letters after classification 
+        # user.plot_to_check(classified, 'Single Character Recognition')
+        # plots the realigned text
+        # user.realign_text()
     else:
         ResultTextBox.delete('1.0',END)
         ResultTextBox.insert(END,"FILE CANNOT BE READ")
     
 
 def OpenFile():
-    name = askopenfilename(initialdir="/home/frank",
+    name = askopenfilename(initialdir="/home/frank/Desktop/OCR_PROJECT/data",
                            filetypes =(("PNG File", "*.png"),("BMP File", "*.bmp"),("JPEG File", "*.jpeg"),("JPG File", "*.jpg")),
                            title = "Choose a file."
                            ) 
